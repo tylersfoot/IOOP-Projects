@@ -11,10 +11,10 @@ public class labsix
     public static void main(String[] args)
     {
         // P1();
-        // P2();
+        P2();
         // P3();
         // P4();
-        P5();
+        // P5();
     }
     
     static void P1()
@@ -46,7 +46,7 @@ public class labsix
         System.out.println("Enter hours worked:");
         double hours = scanner.nextDouble();
 
-        double base = ((hours <= 40) ? hours * rate * 1.5 : 40 * rate);
+        double base = ((hours <= 40) ? hours * rate : 40 * rate);
         double ot = ((hours * rate) - base) * 1.5;
         double gross = base + ot;
 
