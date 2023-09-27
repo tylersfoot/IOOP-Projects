@@ -102,7 +102,7 @@ public class labseven
             System.out.println("The two integers are equal.");
         }
         else {
-            int c = Math.min(a, b);
+        int c = Math.min(a, b);
             b = Math.max(a, b);
             a = c;
             int sum = 0;
