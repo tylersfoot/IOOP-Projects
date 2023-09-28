@@ -10,7 +10,7 @@ public class labeight
 {
     public static void main(String[] args)
     {
-        P1();
+        // P1();
         // P2();
         // P3();
         // P4();
@@ -83,95 +83,162 @@ public class labeight
         }
         scanner.close();
     }
-
     
     static void P2()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a sentence:");
-        String sentence = scanner.nextLine();
-        System.out.println("Sentence is: " + sentence);
-        System.out.println("Sentence length: " + sentence.length());
-        int blanks = 0;
-        for (int i = 0; i < sentence.length(); i++)
-        {
-            if (sentence.charAt(i) == ' ') {
-                blanks++;
+        int r = (int)(Math.random() * 100) + 1;
+        int guess = r-1;
+
+        while (guess != r) {
+            System.out.println("Guess a number from 1 to 100:");
+            guess = scanner.nextInt();
+            if (guess > r) {
+                System.out.println("Your guess is too high!");
+            }
+            if (guess < r) {
+                System.out.println("Your guess is too low!");
             }
         }
-        System.out.println("There are " + blanks + " blanks.");
-        String[] split = sentence.replaceAll(" +"," ").split(" ");
-        for(String temp: split) {
-            System.out.println(temp);
-        }
+        System.out.println("Good job, your guess is correct!");
+
         scanner.close();
+    }
+
+    static String DayOfWeek(int day)
+    {
+        String dayS;
+        switch (day) {
+            case 1:
+                dayS = "Sunday";
+                break;
+            case 2:
+                dayS = "Monday";
+                break;
+            case 3:
+                dayS = "Tuesday";
+                break;
+            case 4:
+                dayS = "Wednesday";
+                break;
+            case 5:
+                dayS = "Thursday";
+                break;
+            case 6:
+                dayS = "Friday";
+                break;
+            case 7:
+                dayS = "Saturday";
+                break;
+            default:
+                dayS = "Invalid day number";
+                break;
+        }
+        return dayS;
     }
 
     static void P3()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter an integer:");
-        int n = scanner.nextInt();
-
-        for (int i = 1; i <= n; i++) {
-            String output = "";
-            int sum = 0;
-            for (int j = 1; j <= i; j++) {
-                sum += j;
-                output += j + " + ";
+        boolean cont = true;
+        String input;
+    
+        while (cont) {
+            System.out.println("Enter an integer number between 1 - 7, for day of week:");
+            int n = scanner.nextInt();
+            if (n >= 1 && n <= 7) {
+                System.out.println("The day of week you picked is " + DayOfWeek(n));
             }
-            output = output.substring(0, output.length() - 3) + " = " + sum;
-            System.out.println(output);
+            else {
+                System.out.println("Day provided is not within the range 1 - 7.");
+            }
+
+            System.out.println("Do you want to continue? (y/n)");
+            scanner.nextLine();  // consume newline left-over
+            input = scanner.nextLine();
+            cont = input.toLowerCase().startsWith("y") ? true : false;
         }
 
         scanner.close();
     }
 
+    static int Factorial(int n)
+    {
+        int product = 1;
+        for (int i = 2; i <= n; i++) {
+            product *= i;
+        }
+        return product;
+    }
+
     static void P4()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the month:");
-        int month = scanner.nextInt();
-        System.out.println("Enter the day:");
-        int day = scanner.nextInt();
-        int date = month * 100 + day;
-        String season = "Winter";
-        if (date >= 316 && date <= 615) {
-            season = "Spring";
+        boolean cont = true;
+        String input;
+    
+        while (cont) {
+            System.out.println("Enter a positive integer number:");
+            int n = scanner.nextInt();
+            if (n >= 1) {
+                System.out.println("The factorial of " + n + " is " + Factorial(n));
+            }
+            else {
+                System.out.println("Integer must be positive to calculate the factorial.");
+            }
+
+            System.out.println("Do you want to continue? (y/n)");
+            scanner.nextLine();  // consume newline left-over
+            input = scanner.nextLine();
+            cont = input.toLowerCase().startsWith("y") ? true : false;
         }
-        if (date >= 616 && date <= 915) {
-            season = "Summer";
-        }
-        if (date >= 916 && date <= 1215) {
-            season = "Fall";
-        }
-        System.out.println("The season at the date " + month + "/" + day + " is " + season + ".");
+
         scanner.close();
     }
 
     static void P5()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter integer A:");
-        int a = scanner.nextInt();
-        System.out.println("Enter integer B:");
-        int b = scanner.nextInt();
-        if (a == b) {
-            System.out.println("The two integers are equal.");
-        }
-        else {
-        int c = Math.min(a, b);
-            b = Math.max(a, b);
-            a = c;
-            int sum = 0;
-            int product = 1;
-            for (int i = a; i <= b; i++) {
-                sum += i;
-                product *= i;
+        boolean cont = true;
+        String input, res1, res2;
+        int bh = 0, bt = 0, h1 = 0, t1 = 0, h2 = 0, t2 = 0;
+    
+        while (cont) {
+            System.out.println("Enter number of times to flip the coin:");
+            int n = scanner.nextInt();
+            bh = 0; 
+            bt = 0;
+            h1 = 0;
+            t1 = 0;
+            h2 = 0;
+            t2 = 0;
+            if (n >= 1) {
+                for (int i = 0; i < n; i++) {
+                    res1 = Math.random() < 0.5 ? "H" : "T";
+                    res2 = Math.random() < 0.5 ? "H" : "T";
+                    System.out.println(res1 + " " + res2);
+                    bh += (res1.equals(res2) && res1.equals("H")) ? 1 : 0;
+                    bt += (res1.equals(res2) && res1.equals("T")) ? 1 : 0;
+                    h1 += res1.equals("H") ? 1 : 0;
+                    t1 += res1.equals("T") ? 1 : 0;
+                    h2 += res2.equals("H") ? 1 : 0;
+                    t2 += res2.equals("T") ? 1 : 0;
+                }
+                System.out.println("Coin1 was heads " + (int)((100.0*h1)/n) + "%, and tails " + (int)((100.0*t1)/n) + "%");
+                System.out.println("Coin2 was heads " + (int)((100.0*h2)/n) + "%, and tails " + (int)((100.0*t2)/n) + "%");
+                System.out.println("The percentage both coins were heads was " + (int)((100.0*bh)/n) + "%");
+                System.out.println("The percentage both coins were tails was " + (int)((100.0*bt)/n) + "%");
             }
-            System.out.println("The inclusive sum between " + a + " and " + b + " is " + sum);
-            System.out.println("The inclusive product between " + a + " and " + b + " is " + product);
+            else {
+                System.out.println("Flip amount must be positive.");
+            }
+
+            System.out.println("Do you want to continue? (y/n)");
+            scanner.nextLine();  // consume newline left-over
+            input = scanner.nextLine();
+            cont = input.toLowerCase().startsWith("y") ? true : false;
         }
+
         scanner.close();
     }
 }
