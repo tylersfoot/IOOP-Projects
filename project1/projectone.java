@@ -253,39 +253,74 @@ public class projectone
     static void P4()
     {
         Scanner scanner = new Scanner(System.in);
-       
-        int steps = 10;
-        int step = 0;
+
         int[] boardSize = new int[2]; // height and then width
-        boardSize[0] = 20;
-        boardSize[1] = 20;
-        int[][] gridCurr = new int[boardSize[0]][boardSize[1]];
+        int[][] gridCurr = null;
+
+        File file;
+        JFileChooser fc = new JFileChooser();
+        fc.showDialog(fc, null);
+        file = fc.getSelectedFile();
+        System.out.println("The selected file is " + file);
+        Scanner inputFile = null;
+
+        try {
+            inputFile = new Scanner(file);
+
+            if (inputFile.hasNextLine()) {
+                int size = Integer.parseInt(inputFile.nextLine());
+                boardSize[0] = size;  // set height
+                boardSize[1] = size;  // set width
+                gridCurr = new int[boardSize[0]][boardSize[1]];
+
+                int row = 0;
+                while (inputFile.hasNextLine() && row < boardSize[0]) {
+                    String line = inputFile.nextLine().replaceAll("\\s", "");
+                    for (int col = 0; col < Math.min(line.length(), boardSize[1]); col++) {
+                        char character = line.charAt(col);
+                        if (character == '.') {
+                            gridCurr[row][col] = 0;
+                        } else if (character == '*') {
+                            gridCurr[row][col] = 1;
+                        }
+                    }
+                    row++;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Unable to open file: " + file);
+        } finally {
+            if (inputFile != null) {
+                inputFile.close();
+            }
+        }
+               
+        int generations = 0;
+        int generation = 0;
         int[][] gridNext = new int[boardSize[0]][boardSize[1]];
         int friends = 0; // number of live cells around
 
-        gridCurr[3][13] = 1;
-        gridCurr[4][13] = 1;
-        gridCurr[5][13] = 1;
+        // ask for input until a positive integer is provided
+        while (generations <= 0) {
+            System.out.print("Enter the number of generations to simulate (a positive integer): ");
+            // check if the input is an integer
+            if (scanner.hasNextInt()) {
+                generations = scanner.nextInt();
+                // check if the input is a positive integer
+                if (generations <= 0) {
+                    System.out.println("Please enter a positive integer.");
+                }
+            } else {
+                // consume the invalid input
+                scanner.next();
+                System.out.println("Invalid input. Please enter a positive integer.");
+            }
+        }
 
-        gridCurr[7][14] = 1;
-        gridCurr[7][15] = 1;
-        gridCurr[7][16] = 1;
-
-        gridCurr[8][9] = 1;
-        gridCurr[9][8] = 1;
-        gridCurr[9][9] = 1;
-        gridCurr[9][10] = 1;
-        gridCurr[10][9] = 1;
-
-        gridCurr[12][14] = 1;
-        gridCurr[13][13] = 1;
-        gridCurr[13][14] = 1;
-        gridCurr[13][15] = 1;
-        gridCurr[14][14] = 1;
-
-        System.out.println("Step: " + step);
+        System.out.println("Initial:");
         PrintBoard(gridCurr);
-        while (step <= steps) {
+        while (generation < generations) {
             // do game logic
 
             for (int h = 0; h < gridCurr.length; h++) { // height
@@ -345,10 +380,16 @@ public class projectone
                 }
             }
 
-            step++;
-            gridCurr = gridNext;
+            generation++;
+            // copy gridNext to gridCurr
+            gridCurr = new int[boardSize[0]][boardSize[1]];
+            for (int i = 0; i < boardSize[0]; i++) {
+                for (int j = 0; j < boardSize[1]; j++) {
+                    gridCurr[i][j] = gridNext[i][j];
+                }
+            }
             System.out.println();
-            System.out.println("Step: " + step);
+            System.out.println("generation: " + generation);
             PrintBoard(gridCurr);
         }
 

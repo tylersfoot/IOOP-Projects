@@ -14,7 +14,7 @@ public class labeight
         // P2();
         // P3();
         // P4();
-        // P5();
+        P5();
     }
 
     static void P1()
