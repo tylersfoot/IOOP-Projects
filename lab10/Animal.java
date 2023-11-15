@@ -41,11 +41,6 @@ public abstract class Animal {
         this.weight = weight;
     }
 
-    @Override
-    public void toString() {
-        System.out.println(GetName() + " is a " + )
-    }
-
     /**
      * Represents the sound the animal makes.
      */
