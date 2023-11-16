@@ -10,6 +10,11 @@ public class Cat extends Animal {
         super(weight, name);
     }
 
+    @Override
+    public String toString() {
+        return GetName() + " is a turtle";
+    }
+
     /**
      * Prints out the sound of the cat.
      */

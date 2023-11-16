@@ -10,6 +10,11 @@ public class Duck extends Animal {
         super(weight, name);
     }
 
+    @Override
+    public String toString() {
+        return GetName() + " is a duck";
+    }
+
     /**
      * Prints out the sound of the duck.
      */

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public abstract class Animal {
 
     private double weight; // in lbs
@@ -50,4 +52,17 @@ public abstract class Animal {
      * Represents the eating behavior of the animal.
      */
     public abstract void Eat();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Animal otherAnimal = (Animal) obj;
+        return weight == otherAnimal.weight && Objects.equals(name, otherAnimal.name);
+    }
+
 }

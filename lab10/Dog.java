@@ -10,6 +10,11 @@ public class Dog extends Animal {
         super(weight, name);
     }
 
+    @Override
+    public String toString() {
+        return GetName() + " is a dog";
+    }
+
     /**
      * Prints out the sound of the dog.
      */
